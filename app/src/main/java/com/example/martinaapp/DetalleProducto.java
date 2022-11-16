@@ -3,6 +3,7 @@ package com.example.martinaapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,14 +19,12 @@ public class DetalleProducto extends AppCompatActivity {
     private ImageView btnMas, btnMenos, imgProducto;
     private Productos object;
     private int numberOder = 1;
-    private DBProductos dbProductos;
+    int id=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalle_producto);
-
-        dbProductos=new DBProductos(this);
 
         addToCartBtn=findViewById(R.id.addToCratBtn);
         txtTitulo=findViewById(R.id.txtTitulo);
@@ -37,28 +36,43 @@ public class DetalleProducto extends AppCompatActivity {
         imgProducto=findViewById(R.id.imgProducto);
         txtPrecioTotal=findViewById(R.id.totalPriceTxt);
 
-        object=(Productos)getIntent().getSerializableExtra("object");
+        if(savedInstanceState == null){
+            Bundle extras = getIntent().getExtras();
+            if(extras == null){
+                id = Integer.parseInt(null);
+            } else {
+                id = extras.getInt("ID");
+            }
+        } else {
+            id = (int) savedInstanceState.getSerializable("ID");
+        }
 
-        int drawableResourceId=this.getResources().getIdentifier(object.getPic(),"drawable",this.getPackageName());
-        Glide.with(this)
-                .load(drawableResourceId)
-                .into(picFood);
+        //int drawableResourceId=this.getResources().getIdentifier(object.getPic(),"drawable",this.getPackageName());
+        //Glide.with(this)
+          //      .load(drawableResourceId)
+            //    .into(picFood);
 
-        titleTxt.setText(object.getTitle());
-        feeTxt.setText("$"+object.getFee());
-        descriptionTxt.setText(object.getDescription());
-        numberOrderTxt.setText(String.valueOf(numberOder));
-        caloryTxt.setText(object.getCalories()+"Calories");
-        starTxt.setText(object.getStar()+"");
-        titleTxt.setText(object.getTime()+" minutes");
-        totalPriceTxt.setText(String.valueOf(numberOder * object.getFee()));
+        final DBProductos dbProductos= new DBProductos(DetalleProducto.this);
+        Productos productos = dbProductos.verDetalleProducto(id);
+
+        if(productos != null){
+            txtTitulo.setText(productos.getNombre());
+            descriptionTxt.setText(productos.getDescripcion());
+            txtprecio.setText((int) productos.getVlr_unitario());
+            //Glide.with(this).load( productos.getImagen().into(imgProducto);
+
+            txtTitulo.setInputType(InputType.TYPE_NULL); //No permita que se habilite el teclado para escribir
+            descriptionTxt.setInputType(InputType.TYPE_NULL);
+            txtprecio.setInputType(InputType.TYPE_NULL);
+
+        }
 
         btnMas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 numberOder = numberOder + 1;
                 txtCantidad.setText(String.valueOf(numberOder));
-                txtPrecioTotal.setText(String.valueOf(numberOder * object.getFee()));
+                txtPrecioTotal.setText(String.valueOf(numberOder * productos.getVlr_unitario()));
             }
         });
 
@@ -69,15 +83,15 @@ public class DetalleProducto extends AppCompatActivity {
                     numberOder = numberOder - 1;
                 }
                 txtCantidad.setText(String.valueOf(numberOder));
-                txtPrecioTotal.setText(String.valueOf(numberOder * object.txtprecio()));
+                txtPrecioTotal.setText(String.valueOf(numberOder * productos.getVlr_unitario()));
             }
         });
 
         addToCartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                object.setNumberInCart(numberOder);
-                managementCart.insertFood(object);
+        //        object.setNumberInCart(numberOder);
+          //      managementCart.insertFood(object);
             }
         });
     }

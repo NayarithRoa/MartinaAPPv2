@@ -94,4 +94,33 @@ public class DBProductos extends DBHelper {
 
         return listaProducto;
     }
+
+    public Productos verDetalleProducto(int id) {
+
+        DBHelper dbHelper = new DBHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase(); //Escribe
+
+        Productos producto = null;
+        Cursor cursorProductos;
+
+        cursorProductos = db.rawQuery("SELECT * FROM " + Constantes.TABLA_PRODUCTO + " WHERE ID_PRODUCTO=" + id + " LIMIT 1", null);
+
+        if (cursorProductos.moveToFirst()) {
+
+            producto = new Productos();
+            producto.setId_Producto(cursorProductos.getInt(0));
+            producto.setNombre(cursorProductos.getString(1));
+            producto.setDescripcion(cursorProductos.getString(2));
+            producto.setVlr_unitario(cursorProductos.getDouble(3));
+            //IMAGEN
+            byte[] bytesImage=cursorProductos.getBlob(4);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(bytesImage,0,bytesImage.length);
+            producto.setImagen(bytesImage);
+            //IMAGEN
+        }
+
+        cursorProductos.close();
+
+        return producto;
+    }
 }
