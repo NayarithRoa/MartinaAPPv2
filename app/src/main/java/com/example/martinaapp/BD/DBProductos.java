@@ -81,15 +81,11 @@ public class DBProductos extends DBHelper {
                 producto.setNombre(cursorProductos.getString(1));
                 producto.setDescripcion(cursorProductos.getString(2));
                 producto.setVlr_unitario(cursorProductos.getDouble(3));
-                /*producto.setImagen(cursorProductos.getBlob(4));*/
-
+                //IMAGEN
                 byte[] bytesImage=cursorProductos.getBlob(4);
                 Bitmap bitmap = BitmapFactory.decodeByteArray(bytesImage,0,bytesImage.length);
                 producto.setImagen(bytesImage);
-                /*
-                ByteArrayInputStream bais = new ByteArrayInputStream(cursorProductos.getBlob(4));
-                Bitmap bitmap = BitmapFactory.decodeStream(bais);
-                */
+                //IMAGEN
 
                 listaProducto.add(producto);
             } while (cursorProductos.moveToNext());

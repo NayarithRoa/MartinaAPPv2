@@ -23,10 +23,12 @@ public class ProductosDefault extends DBHelper{
     public void insertaProductos(){
         DBProductos dbProducto = new DBProductos(context);
         Productos productos= new Productos();
+        //Imagen
         Bitmap bitmap= BitmapFactory.decodeResource(context.getResources(), R.drawable.producto1);
         ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 0 , byteArray);
         byte[] img = byteArray.toByteArray();
+        //Imagen
         //Primer registro
         productos.setNombre("Canasta pequeña");
         productos.setDescripcion("Arreglo frutal con 8 fresas aproximadamente, masmelos, vino pequeño y girasoles");
