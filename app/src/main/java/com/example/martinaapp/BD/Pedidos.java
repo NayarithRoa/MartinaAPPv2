@@ -21,6 +21,9 @@ public class Pedidos {
         Costo_total = costo_total;
         Cantidad_Producto = cantidad_Producto;
     }
+    public Pedidos() {
+
+    }
 
     public long getId_Pedido() {
         return id_Pedido;

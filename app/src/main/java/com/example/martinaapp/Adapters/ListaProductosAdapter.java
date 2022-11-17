@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.martinaapp.BD.Productos;
 import com.example.martinaapp.DetalleProducto;
 import com.example.martinaapp.R;
-import com.example.martinaapp.VerProducto;
 import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
