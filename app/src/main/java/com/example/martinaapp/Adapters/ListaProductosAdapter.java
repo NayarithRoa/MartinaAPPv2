@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.martinaapp.BD.Productos;
+import com.example.martinaapp.DetalleProducto;
 import com.example.martinaapp.R;
 import com.example.martinaapp.VerProducto;
 import com.bumptech.glide.Glide;
@@ -61,7 +62,7 @@ public class ListaProductosAdapter extends RecyclerView.Adapter<ListaProductosAd
                 @Override
                 public void onClick(View view) {
                     Context context = view.getContext();
-                    Intent intent = new Intent(context, VerProducto.class);
+                    Intent intent = new Intent(context, DetalleProducto.class);
                     intent.putExtra("ID", listaProductos.get(getAdapterPosition()).getId_Producto());
                     context.startActivity(intent);
                 }

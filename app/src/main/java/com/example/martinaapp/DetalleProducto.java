@@ -19,7 +19,7 @@ public class DetalleProducto extends AppCompatActivity {
     private ImageView btnMas, btnMenos, imgProducto;
     private Productos object;
     private int numberOder = 1;
-    int id=0;
+    long id=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +39,12 @@ public class DetalleProducto extends AppCompatActivity {
         if(savedInstanceState == null){
             Bundle extras = getIntent().getExtras();
             if(extras == null){
-                id = Integer.parseInt(null);
+                id = Long.parseLong(null);
             } else {
-                id = extras.getInt("ID");
+                id = extras.getLong("ID");
             }
         } else {
-            id = (int) savedInstanceState.getSerializable("ID");
+            id = (long) savedInstanceState.getSerializable("ID");
         }
 
         //int drawableResourceId=this.getResources().getIdentifier(object.getPic(),"drawable",this.getPackageName());
@@ -53,12 +53,12 @@ public class DetalleProducto extends AppCompatActivity {
             //    .into(picFood);
 
         final DBProductos dbProductos= new DBProductos(DetalleProducto.this);
-        Productos productos = dbProductos.verDetalleProducto(id);
+        Productos productos = dbProductos.verDetalleProducto((int) id);
 
         if(productos != null){
             txtTitulo.setText(productos.getNombre());
             descriptionTxt.setText(productos.getDescripcion());
-            txtprecio.setText((int) productos.getVlr_unitario());
+            txtprecio.setText(String.valueOf(productos.getVlr_unitario()));
             //Glide.with(this).load( productos.getImagen().into(imgProducto);
 
             txtTitulo.setInputType(InputType.TYPE_NULL); //No permita que se habilite el teclado para escribir

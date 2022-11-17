@@ -5,7 +5,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-
 import com.example.martinaapp.Adapters.ListaProductosAdapter;
 import com.example.martinaapp.BD.DBProductos;
 import com.example.martinaapp.BD.Productos;
@@ -13,7 +12,7 @@ import com.example.martinaapp.BD.Productos;
 import java.util.ArrayList;
 
 public class Inicio extends AppCompatActivity {
-    RecyclerView recyclerViewCategotyList, listaProductos;
+    RecyclerView listaProductos;
     ListaProductosAdapter adapter;
     ArrayList<Productos> listaArrayProductos;
 
